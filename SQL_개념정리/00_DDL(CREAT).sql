@@ -1,4 +1,10 @@
 /*
+올림 CEIL
+반올림 ROUND
+버림 FLOOR
+오름차순 ASC(ASCENDING)
+내림차순 DESC(DESCENDING)
+
 자료형 
 
 NUMBER : 숫자형(정수,실수)
