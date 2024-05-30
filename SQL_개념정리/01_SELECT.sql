@@ -264,3 +264,88 @@ DUMMY : 실제로 사용되지 않은 데이터
 --존재하지 않는 테이블을 이용해서 현재시간 확인하기
 SELECT SYSDATE, SYSTIMESTAMP
 FROM DUAL;
+
+/*
+WHERE 절 별칭 사용 불가 확인
+*/
+
+--부서코드 D6 확인
+
+SELECT EMP_NAME,DEPT_CODE AS "부서코드"
+FROM EMPLOYEE
+WHERE 부서코드 = 'D6';
+
+ORA-00904: "부서코드": invalid identifier
+00904. 00000 -  "%s: invalid identifier"
+*Cause:    
+*Action:
+9행, 15열에서 오류 발생
+
+--> 부서코드 컬럼이 존재하지 않음
+----> 별칭은 우리가 눈에 보기 좋게 작성하는 별칭일 뿐
+------> WHERE 절에서 찾는데 사용할 수 없음
+
+/*
+그러나 ORDER BY 절에서는 별칭 사용 가능
+*/
+
+SELECT EMP_NAME,SALARY *12 AS "연봉" FROM EMPLOYEE ORDER BY 연봉 DESC;
+
+--> ORDER BY는 무언가를 컬럼에서 찾아오는 것이 아니라
+-- 나타난 정보를 오름차순으로 정렬할지 내림차순으로 정렬할지
+-- 정렬만 하기 때문에 별칭으로 사용할 수 있음
+
+-- EMPLOYEE 테이블에서 이름,부서코드,급여를
+-- 부서코드 오름차순, 급여 내림차순 조회
+SELECT EMP_NAME,DEPT_CODE,SALARY FROM EMPLOYEE ORDER BY DEPT_CODE, SALARY DESC;
+
+
+--EMPLOYEE 테이블에서 이름,부서코드,직급코드를 이름, 부서코드 오름차순 직급코드 내림차순 ,활용해서 조회
+SELECT EMP_NAME AS "이름", DEPT_CODE AS "부서코드", JOB_CODE AS "직급코드"
+FROM EMPLOYEE ORDER BY 부서코드 ASC, 직급코드 DESC, 이름;
+
+/*
+|| 연결 연산자
+--문자열 이어쓰기
++나 ,로 연결하지 않고 || 을 사용해 연결을 표현
+*/
+
+SELECT EMP_ID || EMP_NAME 
+FROM EMPLOYEE;
+
+SELECT EMP_NAME||'의 월급은'||SALARY||'원 입니다.'
+FROM EMPLOYEE;
+
+--MENU 테이블
+--메뉴이름 맨 앞에 카 가 들어간 메뉴 출력
+SELECT MENU_NAME FROM MENU WHERE MENU_NAME LIKE '카%';
+
+--MENU_PRICE 3500원 인 메뉴들 출력
+SELECT MENU_NAME,MENU_PRICE FROM MENU WHERE MENU_PRICE LIKE '3500';
+
+--키오스크에서 1을 눌렀을 때 나올 메뉴 출력
+SELECT MENU_ID,MENU_NAME FROM MENU WHERE MENU_ID LIKE '1';
+
+--특정 단어가 포함된 메뉴 설명 조회 카라멜
+SELECT MENU_NAME,MENU_DESC FROM MENU WHERE MENU_DESC LIKE '%멜%';
+
+--가격이 낮은 순으로 메뉴 조회
+SELECT MENU_NAME,MENU_PRICE FROM MENU  ORDER BY MENU_PRICE ASC;
+
+--직급 코드가 J5인 사원의 수를 조회 COUNT 사용
+SELECT COUNT(*) AS "J5 COUNT" FROM EMPLOYEE WHERE JOB_CODE = 'J5';
+
+--사원의 이름과 이메일을 결합해서 조회
+SELECT EMP_NAME||'('||EMAIL||')' FROM EMPLOYEE;
+
+--사원의 이름과 전화번호를 -사용해서 조회
+SELECT EMP_NAME||'('||PHONE||')' FROM EMPLOYEE;
+
+--사원의 사번과 부서코드를 -사용해서 조회
+SELECT DEPT_CODE||'('||JOB_CODE||')' FROM EMPLOYEE;
+
+--사원의 이름과 급여를 이름:급여 형식으로 조회 AS이름:급여
+SELECT EMP_NAME||'('||SALARY||')' AS "이름:급여" FROM EMPLOYEE;
+
+--사원의 이름 -연봉 형식으로 조회
+SELECT EMP_NAME||'('||SALARY * 12||')' AS "이름-연봉" FROM EMPLOYEE;
