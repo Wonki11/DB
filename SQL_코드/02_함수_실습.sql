@@ -1,0 +1,28 @@
+/*함수 실습 코드*/
+
+--LENGTH--
+
+--1.직원 이름의 길이 조회 이름 길이로 작성
+SELECT EMP_ID,EMP_NAME,LENGTH(EMP_NAME) AS "이름길이"
+FROM EMPLOYEE;
+
+--2. 이메일 아이디의 길이 조회 이메일길이로 작성
+SELECT EMP_ID,EMP_NAME,EMAIL,LENGTH(EMAIL) AS "이메일길이"
+FROM EMPLOYEE
+ORDER BY "이메일길이";
+
+--3. 전화번호 길이가 11자리인 직원 조회 아이디 이름 번호
+SELECT EMP_ID,EMP_NAME,PHONE,LENGTH(PHONE) AS "전화번호길이" FROM EMPLOYEE WHERE LENGTH(PHONE) <= 11 ORDER BY "전화번호길이";
+
+--4. 이메일의 길이가 15자 이상인 직원 조회 아이디 이름 이메일 이메일 길이
+SELECT EMP_ID,EMP_NAME,EMAIL,LENGTH(EMAIL) AS "이메일길이" FROM EMPLOYEE WHERE LENGTH(EMAIL) >= 15 ORDER BY "이메일길이";
+
+--5 부서코드가 2글자인 직원 조회 아이디 이름 부서코드
+SELECT EMP_ID,EMP_NAME,DEPT_CODE,LENGTH(DEPT_CODE) AS "부서코드" FROM EMPLOYEE WHERE LENGTH(DEPT_CODE) <=2 ORDER BY "부서코드";
+
+--6 전화번호 010 이 포함된 직원 조회
+SELECT EMP_ID,EMP_NAME,PHONE FROM EMPLOYEE WHERE INSTR(PHONE,'010')>0;
+
+--> LIKE로 변경
+SELECT EMP_ID,EMP_NAME,PHONE FROM EMPLOYEE WHERE PHONE LIKE '010%';
+
