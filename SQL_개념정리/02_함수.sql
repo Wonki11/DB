@@ -69,3 +69,82 @@ SELECT EMP_NAME,SUBSTR(EMAIL,1,INSTR(EMAIL,'@')-1)AS "이메일 아이디" FROM 
 --INSTR(EMAIL.'@')이메일 주소에서 @위치를 찾음
 --찾은 다음에 @ 가 표시되면 안되기 때문에 -1 설정을 해서 @제거
 SELECT EMP_NAME,SUBSTR(EMAIL,1,INSTR(EMAIL,'@'))AS "이메일 아이디" FROM EMPLOYEE ORDER BY "이메일 아이디";
+
+--INSTR(EMAIL,1)을 작성하게 되면 나타나는 결과
+SELECT EMP_NAME,SUBSTR(EMAIL,1,INSTR(EMAIL,'@')-1)AS "이메일아이디" FROM EMPLOYEE ORDER BY "이메일아이디";
+
+--앞에서 부터 가지고 올 때는 +를 작성해주지만 뒤에서 부터 값을 가지고 올때는 - 작성
+SELECT EMP_ID,PHONE,SUBSTR(PHONE,-4)AS"마지막 네자리" FROM EMPLOYEE;
+
+
+/******숫자 관련 함수*******/
+
+--COUNT 행의 총 개수를 셀 때 사용하는 함수
+
+/*
+COUNT 사용 방법
+COUNT(*) : 조회된 모든 행의 개수 반환 
+        > 이름,주소와 같은 항목이 몇개 있는가?
+COUNT(컬럼명) : 지정된 컬럼 값이 NULL이 아닌 행의 개수 반환 (NULL은 제외하고 개수 센다는 의미)
+        > 00개 조회되었습니다. 검색한 내역 총 몇개인가
+COUNT(DISTINCT 컬럼명) : 지정된 컬럼에서 중복 값을 제외한 행의 개수 반환
+*/
+
+--EMPLOYEE 테이블 전체 행의 개수
+SELECT COUNT(*) FROM EMPLOYEE;
+
+--전화번호가 있는 사원 수
+SELECT COUNT(*) FROM EMPLOYEE WHERE PHONE IS NOT NULL;
+
+--좀 더 가볍게 WHERE을 사용하지 않고
+--전화번호가 있는 사원의 수
+SELECT COUNT(PHONE) FROM EMPLOYEE;
+
+--AVG 평균 모든 사원의 평균 급여 조회
+SELECT AVG(SALARY) FROM EMPLOYEE;
+
+--1. 올림 CEIL
+SELECT CEIL(AVG(SALARY)) FROM EMPLOYEE;
+--2. 내림 FLOOR
+SELECT FLOOR(AVG(SALARY)) FROM EMPLOYEE;
+--3. 반올림 ROUND
+SELECT ROUND(AVG(SALARY)) FROM EMPLOYEE;
+
+/*
+**TRIM**
+공백 관련 함수
+
+TRIM([ [옵션]문자열|컬럼명 FROM ] 문자열|컬럼명)
+
+주어진 문자열의 앞쪽|뒤쪽|양쪽에 존재하는 지정된 문자열 제거
+
+--옵션 앞쪽(LEADING)
+       뒤쪽(TRAILING)
+       양쪽(BOTH 기본값)
+*/
+
+SELECT '      점        심     ', TRIM(LEADING' ' FROM'   점    심     ') FROM DUAL;   --앞쪽 공백 제거
+
+--TRIM 의 경우 문자열 1개만 가능
+SELECT '      점               심     ', TRIM(LEADING' ' FROM'   점    심     ') FROM DUAL;   --앞쪽 공백 제거
+
+SELECT '      점               심     ', TRIM(TRAILING' ' FROM'   점    심     ') FROM DUAL;   --TRAILING : 뒤쪽 공백제거
+--육안상 뒤쪽 공백 제거한 것이 보이지 않을수 있으나 뒤 공백이 제거된 상태에서 출력
+SELECT '      점        심     ', TRIM(BOTH' ' FROM'   점    심     ') FROM DUAL;   --양쪽 공백 제거
+
+--앞쪽 뒤쪽 양쪽 공백제거 한번에 사용하기
+SELECT '      점        심     ', TRIM(LEADING' ' FROM'   점    심     '),    --앞쪽 공백 제거
+ '      점        심     ', TRIM(TRAILING' ' FROM'   점    심     '),    --뒤쪽 공백 제거
+ '      점        심     ', TRIM(BOTH' ' FROM'   점    심     ') FROM DUAL;   --양쪽 공백 제거
+ 
+ /*
+ REPLACE : 특정 문자열을 대체할 때 사용
+ 
+ 사용방법
+ (문자열|컬럼명,찾을 문자열, 바꿀 문자열
+ */
+ 
+ --NATIONAR 테이블에서 한국으로 적혀있는 글자를 대한민국으로 변경하기
+ SELECT * FROM national;
+ 
+ SELECT NATIONAL_CODE,NATIONAL_NAME,REPLACE(NATIONAL_NAME,'한국','대한민국') FROM NATIONAL;
