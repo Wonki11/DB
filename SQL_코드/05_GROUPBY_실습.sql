@@ -67,3 +67,16 @@ FROM EMPLOYEE
 WHERE SALARY >= 5000000
 GROUP BY DEPT_CODE
 ORDER BY "평균 급여" DESC;
+
+-- 그룹을 세분화 하여 조회하기 --
+--1. 각 부서별 사원들의 퇴사 여부를 조회하고 사원수 조회
+SELECT DEPT_CODE,ENT_YN,COUNT(*) AS "사원수"
+FROM EMPLOYEE
+GROUP BY DEPT_CODE,ENT_YN;
+
+-- 각 부서별,직급별,입사일에 따른 사원수 조회
+SELECT DEPT_CODE,JOB_CODE,HIRE_DATE,COUNT(*) AS "사원수"
+FROM EMPLOYEE
+GROUP BY DEPT_CODE,JOB_CODE,HIRE_DATE
+ORDER BY DEPT_CODE,JOB_CODE,HIRE_DATE;
+--공채 채용 후 기수별 남아있는 사원 수 조회할 때 사용
