@@ -37,7 +37,7 @@ SELECT * FROM DEPARTMENT2;
 
 -- 모두 INSERT 해줄 것이기 때문에 컬럼명 생략
                            -- EMP_ID EMP_NAME
-INSERT INTO EMPLOYEE2 VALUES(       800,     '동그라미', '870814-2123456',    'KIM@KH.KR'         , '01076996190',            'D1',      'J7',         'S3',            4300000 , 0.2,        200,             SYSDATE, NULL, 'N'); 
+INSERT INTO EMPLOYEE2 VALUES(800,'동그라미','870814-2123456','KIM@KH.KR','01076996190','D1','J7','S3',4300000,0.2,200,SYSDATE, NULL, 'N'); 
 COMMIT;
 
 SELECT * FROM EMPLOYEE2 WHERE EMP_ID = 800;
