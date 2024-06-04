@@ -75,37 +75,76 @@ PHONE = '01012345678' WHERE EMP_ID = '200';
 UPDATE EMPLOYEE2 SET SALARY = SALARY * 1.1 , BONUS = NVL/*NVL NULL값의 숫자나 문자열 추가할때 쓰이는 태그*/(BONUS, '') || 'ASDRFAS' WHERE DEPT_CODE = 'D1';  
 SELECT BONUS FROM EMPLOYEE2 WHERE DEPT_CODE = 'D1';
 --3. 직무 코드 'J2'를 가진 모든 직원의 직무 코드를 'J5'로, 부서 코드를 'D3'로 변경
-
+UPDATE EMPLOYEE2 SET DEPT_CODE = 'J5' , JOB_CODE = 'D3' WHERE JOB_CODE = 'J2';
+SELECT DEPT_CODE,JOB_CODE FROM EMPLOYEE2;
 --4. 입사일이 2000-01-01 이후인 모든 직원의 급여를 5% 인상하고, 보너스율을 0.02 증가시키기
-
+UPDATE EMPLOYEE2 SET SALARY = SALARY * 0.5 , BONUS = BONUS + 0.02 where hire_date > TO_DATE('2000-01-01' , 'YYYY-MM-DD');
 --5. 매니저 ID가 '200'인 모든 직원의 매니저 ID를 '210'으로, 부서 코드를 'D5'로 변경
-
+UPDATE EMPLOYEE2 SET MANAGER_ID = '210' , DEPT_CODE = 'D5' WHERE MANAGER_ID = '200';
+SELECT MANAGER_ID FROM EMPLOYEE2;
 --6. 모든 직원의 이메일 도메인을 'or.kr'에서 'company.com'으로 변경하고, 전화번호 형식을 '010-xxxx-xxxx'로 변경
+ALTER TABLE EMPLOYEE2 MODIFY PHONE VARCHAR2(15);
+UPDATE EMPLOYEE2 
+SET EMAIL = REPLACE(EMAIL, 'or.kr' ,'COMPANY.COM'), 
+--PHONE = '010-' || SUBSTR(PHONE, 4,4) || '-' || SUBSTR(PHONE,8);
+--PHONE = REGEXP_REPLACE(PHONE,'(\d{3})(\d{4})(\d{4})','\1-\2-\3');
+--LIKE를 사용해서 변경
+--PHONE = "010-XXXX-XXXX
+
+SELECT PHONE FROM EMPLOYEE2;
+ROLLBACK;
 
 --7. 급여 수준이 'S3'인 모든 직원의 급여를 4000000으로, 직무 코드를 'J4'로 수정
-
+UPDATE EMPLOYEE2 SET SALARY = 4000000 , JOB_CODE = 'J4' WHERE SAL_LALEVEL = 'S3';
 --8. 입사일이 '1997-09-12'인 직원의 퇴사일을 '2024-09-12'로, 퇴사 여부를 'Y'로 변경
+UPDATE EMPLOYEE2 SET ENT_DATE = '2024-09-12' , ENT_YN = 'Y' WHERE HIRE_DATE = '1997.09.12';
 
 --9. 이름이 '김영수'인 직원의 이름을 '김영호'로, 이메일을 'kim_yh@or.kr'로 변경
+UPDATE EMPLOYEE2 SET EMP_NAME = REPLACE(EMP_NAME '김영수' , '김영호') , 
+EMAIL = REPLACE(EMAIL,'김영수였던것@123123', 'kim_yh@or.kr');
+
 
 --10. 전화번호가 '01045686656'인 직원의 전화번호를 '01198765432'로, 이메일을 'song_jk_updated@or.kr'로 변경
+UPDATE EMPLOYEE2 SET PHONE = REPLACE(PHONE,'01045686656','01198765432'), EMAIL = REPLACE(EMAIL,'song_jk@or.kr','song_jk_updated@or.kr')
+WHERE EMP_NAME = '송종기';
+SELECT EMP_NAME,PHONE,EMAIL FROM EMPLOYEE2;
+ROLLBACK;
 
 --11. 보너스율이 0.1인 모든 직원의 보너스율을 0.2로, 급여를 3200000으로 변경
+UPDATE EMPLOYEE2 SET BONUS = 0.2 , SALARY = 3200000
+WHERE BONUS = 0.1;
 
 --12. 주민등록번호가 '861015-1356452'인 직원의 급여를 3800000으로, 부서 코드를 'D7'으로 수정
+UPDATE EMPLOYEE2 SET SALARY = 3800000 , JOB_CODE = 'D7'
+WHERE EMP_NO = '861015-1356452';
 
 --13. 모든 직원의 부서 코드를 'D9'로, 직무 코드를 'J1'로 변경
+UPDATE EMPLOYEE2 SET JOB_CODE = 'D9' , DEPT_CODE = 'J1';
 
 --14. 부서 코드 'D5'에 속한 모든 직원의 보너스율을 0.05 증가시키고, 전화번호를 '01011112222'로 변경
+UPDATE EMPLOYEE2 SET BONUS = BONUS + 0.05 , PHONE = 01011112222 
+WHERE DEPT_CODE = 'D5';
+
+ROLLBACK;
 
 --15. 직무 코드 'J3'를 가진 모든 직원의 이메일을 'updated@or.kr'로, 급여 수준을 'S5'로 변경
+UPDATE EMPLOYEE2 SET EMAIL = 'updated@or.kr' , SAL_LEVEL = 'S5' 
+WHERE JOB_CODE = 'J3';
 
 --16. 모든 직원의 입사 연도를 '2023'로, 퇴사 여부를 'N'으로 변경
+UPDATE EMPLOYEE2 
+SET HIRE_DATE = '2023' , ENT_YN = 'N';
+
 --17. 보너스율이 0.15인 모든 직원의 보너스율을 0.25로, 급여를 4000000으로 변경
 --
 --18. 부서 코드 'D8'과 직무 코드 'J2'를 가진 모든 직원의 급여를 4500000으로, 전화번호를 '01022223333'으로 변경
+UPDATE EMPLOYEE2
+SET SALARY = 4500000 , PHONE = '01022223333'
+WHERE DEPT_CODE = 'D8' AND JOB_CODE = 'J2';
 --
 --19. 모든 직원의 이메일 도메인을 'example.com'으로, 부서 코드를 'D10'으로 변경
+UPDATE EMPLOYEE2
+SET EMAIL = REPLACE(EMAIL,'or.kr','example.com'), DEPT_CODE = 'D10';
 --
 --20. 이름이 '박민수'인 직원의 이름을 '박준수'로, 급여를 3500000으로 변경
 --
@@ -116,6 +155,9 @@ SELECT BONUS FROM EMPLOYEE2 WHERE DEPT_CODE = 'D1';
 --23. 매니저 ID가 '201'인 모든 직원의 매니저 ID를 '211'으로, 부서 코드를 'D6'로 변경
 --
 --24. 모든 직원의 이메일 도메인을 'newcompany.com'으로, 전화번호 형식을 '011-xxxx-xxxx'로 변경
---
+UPDATE EMPLOYEE2
+SET EMAIL = SUBSTR('EMAIL',1,INSTR(EMAIL,'@')-1||'@newcompany.com',
+    PHONE = '011-XXXX-XXXX';
+
 --25. 부서 코드 'D4'에 속한 모든 직원의 보너스율을 0.1 증가시키고, 전화번호를 '01033334444'로 변경
---
+
