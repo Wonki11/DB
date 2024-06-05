@@ -143,7 +143,7 @@ SELECT * FROM JOB;
     J6	        대리
     J7	        사원
 */
-SELECT EMP_ID,EMP_NAME,JOB_CODE,JOB_NAME
+SELECT EMP_ID ,EMP_NAME, JOB_CODE, JOB_NAME
 FROM EMPLOYEE
 JOIN JOB USING(JOB_CODE);
 /*
@@ -227,7 +227,7 @@ SELECT EMP_NAME,DEPT_TITLE
 FROM EMPLOYEE,DEPARTMENT
 WHERE DEPT_CODE = DEPT_ID(+);
 -- DEPT_CODE와 DEPT_ID 값이 일치하지 않아도
--- 왼쪽에 있는 컬럼 수에 맞게 표시를 넣어라 (NULL 값이라도 넣어라)
+-- 왼쪽에 있는 컬럼 수에 맞게 표시를 넣기 (NULL 값이라도 채우기)
 
 
 
@@ -249,7 +249,7 @@ SELECT EMP_NAME,DEPT_TITLE
 FROM EMPLOYEE,DEPARTMENT
 WHERE DEPT_CODE(+) = DEPT_ID;
 -- DEPT_CODE와 DEPT_ID 값이 일치하지 않아도
--- 오른쪽에 있는 컬럼 수에 맞게 표시를 넣어라 (NULL 값이라도 넣어라)
+-- 오른쪽에 있는 컬럼 수에 맞게 표시를 넣기 (NULL 값이라도 채우기)
 
 
 
