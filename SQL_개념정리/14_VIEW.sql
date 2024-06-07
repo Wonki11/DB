@@ -49,4 +49,19 @@ ORA-01031: insufficient privileges
 
 GRANT CREATE VIEW TO KH_WORKBOOK;
 VIEW 를 생성할 권한 부여
+
+view ALL_COMPANIES이(가) 생성되었습니다. 
+
+VIEW 는 주로 테이블을 복제하거나 조합해서 테스트용 SELECT 많이 사용
+SELECT 문 저장하고 다시 보기로 사용 
 */
+-- 가격이 1500 이상인 과자를 조회하고 나중에 또 다시 볼 수 있는 뷰 생성 
+--> VIEW ONEFIVE_SNACKS 
+
+CREATE VIEW 뷰이름 AS 1500이상 조회한 SELECT 문 작성
+
+SELECT * FROM SNACKS WHERE FRICE >= 1500;
+
+-- 서울시 강남구에 위치한 회사를 조회하는 뷰  COMPANY_IN_GANGNAM 
+SELECT * FROM COMPANY  WHERE COMPANY_ADDRESS = '서울시 강남구';
+CREATE VIEW COMPANY_IN_GANGNAM AS SELECT * FROM COMPANY WHERE COMPONY_ADDRESS = '서울시 강남구';
