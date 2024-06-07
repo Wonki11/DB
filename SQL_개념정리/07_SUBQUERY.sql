@@ -45,7 +45,7 @@ FROM EMPLOYEE
 WHERE SALARY >= 3000000;
 
 --3) 전 직원의 평균 급여보다 많은 급여를 받고 있는 직원 조회
---메인쿼리 2)  서브쿼리 1)
+
 SELECT EMP_ID, EMP_NAME, JOB_CODE,SALARY 
 FROM EMPLOYEE
 WHERE SALARY >= 30000000;
